@@ -1,0 +1,80 @@
+
+# ==========================================
+# CryptX - Next.js + Prisma .gitignore
+# ==========================================
+
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.yarn-cache/
+
+# Next.js
+.next/
+out/
+.vercel/
+
+# Production builds
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Keep example environment files
+!.env.example
+!.env.template
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Testing
+coverage/
+.nyc_output/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-shm
+prisma/*.db-wal
+
+# Generated Prisma client
+# Uncomment if you generate Prisma client in a custom directory
+# prisma/generated/
+
+# IDEs and editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Build and deployment backups
+.vercel-fix-backup-*/
+package.json.vercel-backup-*
