@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id             String       @id @default(cuid())
+  sessionId      String       @unique
+  playerName     String
+  teamName       String
+  college        String?
+  score          Int          @default(0)
+  completedCount Int          @default(0)
+  currentOrder   Int          @default(1)
+  attemptsTotal  Int          @default(0)
+  hintsTotal     Int          @default(0)
+  startTime      DateTime     @default(now())
+  endTime        DateTime?
+  isActive       Boolean      @default(true)
+  usedWords      String       @default("[]") // JSON array of used words
+  currentChallengeAnswer String? // Server-side answer store (never sent to client)
+  submissions    Submission[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Submission {
+  id            String   @id @default(cuid())
+  playerId      String
+  player        Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  challengeId   String   // composite: formula+word key
+  challengeOrder Int
+  answer        String
+  isCorrect     Boolean
+  hintsUsed     Int      @default(0)
+  attemptCount  Int      @default(1)
+  pointsAwarded Int      @default(0)
+  timeMs        Int      @default(0) // ms taken to answer
+  createdAt     DateTime @default(now())
+}
+
+model EventSettings {
+  id           Int      @id @default(1)
+  isStarted    Boolean  @default(false)
+  isPaused     Boolean  @default(false)
+  isEnded      Boolean  @default(false)
+  durationMins Int      @default(30)
+  startTime    DateTime?
+  endTime      DateTime?
+  totalChallenges Int   @default(15)
+  adminPassword String  @default("admin123")
+  eventName    String   @default("CRYPTX Challenge 2025")
+  updatedAt    DateTime @updatedAt
+}
+
+model RateLimit {
+  id         String   @id @default(cuid())
+  sessionId  String
+  endpoint   String
+  count      Int      @default(1)
+  windowStart DateTime @default(now())
+
+  @@index([sessionId, endpoint])
+}
