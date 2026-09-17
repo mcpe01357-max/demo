@@ -27,6 +27,7 @@ interface PlayerState {
   currentOrder: number;
   totalChallenges: number;
   completedCount: number;
+  attemptsTotal?: number;
 }
 
 interface EventState {
